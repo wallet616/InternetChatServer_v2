@@ -10,7 +10,8 @@ public class DataRead extends Main{
 	private static File file;
 	private static final String OS = System.getProperty("os.name");
 	
-	public static void loadUsers() {
+	public static boolean loadUser(String userKey, boolean check) {
+		boolean repeat = false;
 		try {
 			if (OS.startsWith("Win")) {
 				folder = new File(System.getenv("APPDATA") + "/wallet616");
@@ -26,35 +27,71 @@ public class DataRead extends Main{
 			if (!file.exists()) {
 				file.createNewFile();
 			}
-			
+		    
+			// Data to assign in loops.
 			BufferedReader br = new BufferedReader(new FileReader(file));
-		    
 		    String line;
+		    int currentID = 0;
+		    boolean userKeyFound = false;
+		    boolean isFreeToUse = true;
 		    
-		    int currentID = -1;
+		    if (!check) {
+			    loopbreak:
+			    for (int i = 0; i < slots; i++) {
+		    		if (usersList[i][0] == null) {
+		    			currentID = i;
+	    				break loopbreak;
+	    			}
+		    	}
+			    loopbreak:
+				for (int i = 0; i < slots; i++) {
+			    	if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
+		    			isFreeToUse = false;
+		    			break loopbreak;
+		    		}
+			    }
+		    }
 		    
-		    while ((line = br.readLine()) != null) {
-		    	line = clearText(line);
-		    	
-		    	if (line.startsWith("UserKey: ")) {
-		    		currentID++;
-		    		usersList[currentID][0] = line.substring(9);
-		    	}
-		    	
-		    	loopbreak:
-		    	if (line.startsWith("UserName: ")) {
-		    		usersList[currentID][1] = line.substring(10);
-		    		break loopbreak;
-		    	}
+		    if (isFreeToUse) {
+			    loopbreak:
+			    while ((line = br.readLine()) != null) {
+			    	line = clearText(line);
+			    	
+			    	if (line.equals("UserKey: " + userKey)) {
+			    		if (!check) {
+			    			usersList[currentID][0] = line.substring(9);
+			    		}
+			    		userKeyFound = true;
+			    		repeat = true;
+			    	}
+			    	if (line.startsWith("UserName: ") && userKeyFound) {
+			    		if (!check) {
+			    			usersList[currentID][1] = line.substring(10);
+			    		}
+			    	}
+			    	
+			    	if (line.startsWith("UserKey: ") && userKeyFound) {
+			    		break loopbreak;
+			    	}
+			    }
 		    }
 	
 		    br.close();
 		    
-		    Log.log("Users list has been loaded.");
+		    if (!check) {
+			    if (repeat) {
+			    	Log.log("User has been loaded to list.");
+			    } else if (!isFreeToUse) {
+			    	Log.log("Use has not been loaded, already at users list.");
+			    } else {
+			    	Log.log("User has not been loaded.");
+			    }
+		    }
 	    
 		} catch (IOException e) {
 			Log.error("Unable to load users list.");
 		}
+		return repeat;
 	}
 	
 	public static String clearText(String message) {

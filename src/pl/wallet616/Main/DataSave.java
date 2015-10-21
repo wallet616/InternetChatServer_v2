@@ -21,25 +21,17 @@ public class DataSave extends Main{
 				file = new File("/home/wallet616/data.dat");
 			}
 			
-			// Dodanie nowych danych na koncu linii.
-			boolean isFreeToUse = true;
-			for(int i = 0; i < usersList.length; i++) {
-				if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
-					isFreeToUse = false;
-				}
-			}
-			
-			if (isFreeToUse) {
+			if (!DataRead.loadUser(userKey, true)) {
 				BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
 				bw.append("UserKey: " + DataRead.clearText(userKey) + "\n");
 				bw.append("	UserName: " + DataRead.clearText(userName) + "\n");
 			    bw.close();
 			    repeat = true;
 			    
-			    Log.log("Data has been added to data file.");
-			    DataRead.loadUsers();
+			    Log.log("User has been added to data file.");
+			    DataRead.loadUser(userKey, false);
 			} else {
-				Log.log("Data has not been added to data file, user key already in use.");
+				Log.log("User has not been added to data file, user key already in use.");
 			}
 	    
 		} catch (IOException e) {
@@ -58,36 +50,32 @@ public class DataSave extends Main{
 			}
 			
 			BufferedReader br = new BufferedReader(new FileReader(file));
-		    
 		    String line;
 		    String newString = "";
 		    boolean foundKey = false;
-		    while ((line = br.readLine()) != null)
-		    {
-		    	if (line.substring(9).startsWith(userKey)) {
-		    		foundKey = true;
-		    	}
-		    	if (foundKey) {
-		    		if (position.equals("userKey")) {
-		    			boolean isFreeToUse = true;
-		    			for(int i = 0; i < usersList.length; i++) {
-		    				if (usersList[i][0] != null && usersList[i][0].equals(data)) {
-		    					isFreeToUse = false;
-		    				}
-		    			}
-		    			
-		    			if (isFreeToUse) {
-		    				newString += "UserKey: " + DataRead.clearText(data) + "\n";
-		    				repeat = true;
-		    			}
-		    		} else if (position.equals("userName")) {
-		    			newString += "	UserName: " + DataRead.clearText(data) + "\n";
-			    		repeat = true;
-		    		}
-		    		foundKey = false;
-		    	} else {
-		    		newString += line + "\n";
-		    	}
+		    
+		    if (!(position.equals("userKey") && DataRead.loadUser(DataRead.clearText(data), true))) {
+			    while ((line = br.readLine()) != null)
+			    {
+			    	if (line.substring(9).startsWith(userKey)) {
+			    		foundKey = true;
+			    	}
+			    	if (foundKey) {
+			    		if (position.equals("userKey") && DataRead.clearText(line).startsWith("UserKey")) {
+			    			newString += "UserKey: " + DataRead.clearText(data) + "\n";
+			    			repeat = true;
+			    			foundKey = false;
+			    		} else if (position.equals("userName") && DataRead.clearText(line).startsWith("UserName")) {
+			    			newString += "	UserName: " + DataRead.clearText(data) + "\n";
+				    		repeat = true;
+				    		foundKey = false;
+			    		} else {
+				    		newString += line + "\n";
+				    	}
+			    	} else {
+			    		newString += line + "\n";
+			    	}
+			    }
 		    }
 		    br.close();
 			
@@ -97,7 +85,7 @@ public class DataSave extends Main{
 		    
 		    if (repeat) {
 		    	Log.log("Data has been changed in data file.");
-			    DataRead.loadUsers();
+		    	DataRead.loadUser(userKey, false);
 		    } else {
 		    	Log.log("Data has not been changed.");
 		    }
