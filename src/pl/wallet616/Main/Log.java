@@ -10,6 +10,7 @@ import java.util.Date;
 
 public class Log extends Main{
 	private static File folder;
+	private static File folder2;
 	private static File fileLog;
 	
 	// Creating log.
@@ -27,15 +28,20 @@ public class Log extends Main{
 		
 		try {
 			if (System.getProperty("os.name").startsWith("Win")) {
-				folder = new File(System.getenv("APPDATA") + "/wallet616/error");
-				fileLog = new File(System.getenv("APPDATA") + "/wallet616/error/" + fileDateFormat.format(date) + ".txt");
+				folder = new File(System.getenv("APPDATA") + "/wallet616/server");
+				folder2 = new File(System.getenv("APPDATA") + "/wallet616/server/error");
+				fileLog = new File(System.getenv("APPDATA") + "/wallet616/server/error/" + fileDateFormat.format(date) + ".txt");
 			} else {
-				folder = new File("/home/wallet616/error");
-				fileLog = new File("home/wallet616/error/" + fileDateFormat.format(date) + ".txt");
+				folder = new File("/home/wallet616/server");
+				folder2 = new File("/home/wallet616/server/error");
+				fileLog = new File("home/wallet616/server/error/" + fileDateFormat.format(date) + ".txt");
 			}
 			
 			if (!folder.exists()) {
 				folder.mkdirs();
+			}
+			if (!folder2.exists()) {
+				folder2.mkdirs();
 			}
 			if (!fileLog.exists()) {
 				fileLog.createNewFile();

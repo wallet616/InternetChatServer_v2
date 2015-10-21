@@ -7,6 +7,7 @@ import java.io.IOException;
 
 public class DataRead extends Main{
 	private static File folder;
+	private static File folder2;
 	private static File file;
 	private static final String OS = System.getProperty("os.name");
 	
@@ -15,14 +16,19 @@ public class DataRead extends Main{
 		try {
 			if (OS.startsWith("Win")) {
 				folder = new File(System.getenv("APPDATA") + "/wallet616");
-				file = new File(System.getenv("APPDATA") + "/wallet616/data.dat");
+				folder2 = new File(System.getenv("APPDATA") + "/wallet616/server");
+				file = new File(System.getenv("APPDATA") + "/wallet616/server/data.dat");
 			} else {
 				folder = new File("/home/wallet616");
-				file = new File("/home/wallet616/data.dat");
+				folder = new File("/home/wallet616/server");
+				file = new File("/home/wallet616/server/data.dat");
 			}
 			
 			if (!folder.exists()) {
 				folder.mkdirs();
+			}
+			if (!folder2.exists()) {
+				folder2.mkdirs();
 			}
 			if (!file.exists()) {
 				file.createNewFile();

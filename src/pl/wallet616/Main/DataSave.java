@@ -16,9 +16,9 @@ public class DataSave extends Main{
 		try {
 			// Sprawdzenie systemu operacyjnego.
 			if (OS.startsWith("Win")) {
-				file = new File(System.getenv("APPDATA") + "/wallet616/data.dat");
+				file = new File(System.getenv("APPDATA") + "/wallet616/server/data.dat");
 			} else {
-				file = new File("/home/wallet616/data.dat");
+				file = new File("/home/wallet616/server/data.dat");
 			}
 			
 			if (!DataRead.loadUser(userKey, true)) {
