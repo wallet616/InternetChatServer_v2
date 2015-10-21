@@ -81,9 +81,9 @@ public class DataRead extends Main{
 		    
 		    if (!check) {
 			    if (repeat) {
-			    	Log.log("User has been loaded to list.");
+			    	Log.log("User " + usersList[currentID][1] + " has been loaded to list.");
 			    } else if (!isFreeToUse) {
-			    	Log.log("Use has not been loaded, already at users list.");
+			    	Log.log("User " + usersList[currentID][1] + " has not been loaded, already at users list.");
 			    } else {
 			    	Log.log("User has not been loaded.");
 			    }
@@ -116,20 +116,23 @@ public class DataRead extends Main{
 	
 	public static boolean unloadUser(String userKey) {
 		boolean repeat = false;
+		String username = "";
 		loopbreak:
 		for (int i = 0; i < slots; i++) {
 		    if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
 		    	usersList[i][0] = null;
+		    	username = usersList[i][1];
 		    	usersList[i][1] = null;
+		    	usersList[i][2] = null;
 		    	repeat = true;
 	    		break loopbreak;
 	    	}
 		}
 		
 		if (repeat) {
-			Log.log("User has been unloaded.");
+			Log.log("User " + username + " has been unloaded.");
 		} else {
-			Log.log("Unable to unloaduser.");
+			Log.log("Unable to unload user.");
 		}
 		return repeat;
 	}

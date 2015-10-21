@@ -2,10 +2,10 @@ package pl.wallet616.Main;
 
 public class Main {
 	public static final int slots = 32;
-	public static String[][] usersList = new String[slots][2];
+	public static String[][] usersList = new String[slots][3];
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		Background.background.start();
 		
 		DataSave.addData("521das221asd", "Kaktus");
 		
@@ -21,6 +21,7 @@ public class Main {
 		
 		DataSave.changeData("22d21saf2df", "userName", "Proszek do robienia kart");
 		
+		usersList[0][2] = "" + System.currentTimeMillis();
 		
 		Log.log(usersList[0][0]);
 		Log.log(usersList[0][1]);

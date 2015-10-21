@@ -28,7 +28,7 @@ public class DataSave extends Main{
 			    bw.close();
 			    repeat = true;
 			    
-			    Log.log("User has been added to data file.");
+			    Log.log("User " + userName + " has been added to data file.");
 			    DataRead.loadUser(userKey, false);
 			} else {
 				Log.log("User has not been added to data file, user key already in use.");
