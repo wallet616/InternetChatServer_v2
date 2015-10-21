@@ -53,25 +53,26 @@ public class DataRead extends Main{
 		    }
 		    
 		    if (isFreeToUse) {
+		    	repeat = true;
+		    	
 			    loopbreak:
 			    while ((line = br.readLine()) != null) {
 			    	line = clearText(line);
+			    	
+			    	if (line.startsWith("UserKey: ") && userKeyFound) {
+			    		break loopbreak;
+			    	}
 			    	
 			    	if (line.equals("UserKey: " + userKey)) {
 			    		if (!check) {
 			    			usersList[currentID][0] = line.substring(9);
 			    		}
 			    		userKeyFound = true;
-			    		repeat = true;
 			    	}
 			    	if (line.startsWith("UserName: ") && userKeyFound) {
 			    		if (!check) {
 			    			usersList[currentID][1] = line.substring(10);
 			    		}
-			    	}
-			    	
-			    	if (line.startsWith("UserKey: ") && userKeyFound) {
-			    		break loopbreak;
 			    	}
 			    }
 		    }
@@ -111,5 +112,25 @@ public class DataRead extends Main{
 			Log.error("Unable to clear text.");
 		}
 		return message;
+	}
+	
+	public static boolean unloadUser(String userKey) {
+		boolean repeat = false;
+		loopbreak:
+		for (int i = 0; i < slots; i++) {
+		    if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
+		    	usersList[i][0] = null;
+		    	usersList[i][1] = null;
+		    	repeat = true;
+	    		break loopbreak;
+	    	}
+		}
+		
+		if (repeat) {
+			Log.log("User has been unloaded.");
+		} else {
+			Log.log("Unable to unloaduser.");
+		}
+		return repeat;
 	}
 }

@@ -59,6 +59,7 @@ public class DataSave extends Main{
 			    {
 			    	if (line.substring(9).startsWith(userKey)) {
 			    		foundKey = true;
+			    		DataRead.unloadUser(userKey);
 			    	}
 			    	if (foundKey) {
 			    		if (position.equals("userKey") && DataRead.clearText(line).startsWith("UserKey")) {

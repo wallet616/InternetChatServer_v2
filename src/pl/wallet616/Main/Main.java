@@ -17,8 +17,13 @@ public class Main {
 		
 		DataSave.addData("120ad", "Ziemniak");
 		
+		DataRead.loadUser("22d21saf2df", false);
 		
-		DataSave.changeData("22d21saf2df", "userName", "Proszek do pieczenia");
+		DataSave.changeData("22d21saf2df", "userName", "Proszek do robienia kart");
+		
+		
+		Log.log(usersList[0][0]);
+		Log.log(usersList[0][1]);
 	}
 
 }
