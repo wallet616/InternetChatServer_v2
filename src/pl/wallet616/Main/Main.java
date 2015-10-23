@@ -11,12 +11,6 @@ public class Main {
 	public static void main(String[] args) {
 		Background.background.start();
 		ConnectionHandler.connection.start();
-		
-		DataRead.loadUser("22d21sf2df", false);
-		
-		DataSave.changeData("22d21saf2df", "userName", "Proszek do robienia kart");
-		
-		usersList[0][2] = "" + System.currentTimeMillis();
 	}
 
 }

@@ -49,14 +49,9 @@ public class ConnectionHandler extends Main {
 	                
 	                if (vaildCommand) {
 	                	if (CommandHandler.commandInput(buffer)) {
-	                		// To remove!! //
-	                		Log.log(buffer[0]);
-	                		Log.log(buffer[1]);
-	                		Log.log(buffer[2]);
-	                		// To remove!! //
 	                		returnMessage = "1:1:1";
 	                	} else {
-	                		returnMessage = "1:1:0";
+	                		returnMessage = "1:2:0";
 	                	}
 	                } else {
 	                	returnMessage = "1:0:0";

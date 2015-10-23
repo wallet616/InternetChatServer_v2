@@ -8,7 +8,6 @@ public class CommandHandler extends Main{
 		breakpoint:
         	while (id < slots) {
 				if (usersList[id][0] != null && usersList[id][0].equals(message[0])) {
-					usersList[id][2] = String.valueOf(System.currentTimeMillis());
 					repeat = true;
 					break breakpoint;
 				}
@@ -16,13 +15,20 @@ public class CommandHandler extends Main{
 		    }
 		
 		if (repeat) {
-			if (message[1].equals("say")) {
+			if (message[1].equals("status")) {
+				usersList[id][2] = String.valueOf(System.currentTimeMillis());
+			} else if (message[1].equals("say")) {
 				Log.log(message[2]);
 			}
 		} else {
-			Log.log(message[2]);
+			if (message[1].equals("load")) {
+				if(DataRead.loadUser(message[0], false)) {
+					repeat = true;
+				} else if (DataSave.addData(message[0], message[2])) {
+					repeat = true;
+				}
+			}
 		}
-		
 		return repeat;
 	}
 }
