@@ -7,17 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		Background.background.start();
 		
-		DataSave.addData("521das221asd", "Kaktus");
-		
-		DataSave.addData("wwwwwaf2df", "Ziemniak");
-		
-		DataSave.addData("22d21saf2df", "Ziemniak");
-		
-		DataSave.addData("ddddddd2df", "Ogorek");
-		
-		DataSave.addData("120ad", "Ziemniak");
-		
-		DataRead.loadUser("22d21saf2df", false);
+		DataRead.loadUser("22d21sf2df", false);
 		
 		DataSave.changeData("22d21saf2df", "userName", "Proszek do robienia kart");
 		

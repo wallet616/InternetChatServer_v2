@@ -59,7 +59,6 @@ public class DataRead extends Main{
 		    }
 		    
 		    if (isFreeToUse) {
-		    	repeat = true;
 		    	
 			    loopbreak:
 			    while ((line = br.readLine()) != null) {
@@ -73,6 +72,7 @@ public class DataRead extends Main{
 			    		if (!check) {
 			    			usersList[currentID][0] = line.substring(9);
 			    		}
+			    		repeat = true;
 			    		userKeyFound = true;
 			    	}
 			    	if (line.startsWith("UserName: ") && userKeyFound) {
@@ -87,7 +87,7 @@ public class DataRead extends Main{
 		    
 		    if (!check) {
 			    if (repeat) {
-			    	Log.log("User " + usersList[currentID][1] + " has been loaded to list.");
+			    	Log.log("User " + usersList[currentID][1] + " has connected.");
 			    } else if (!isFreeToUse) {
 			    	Log.log("User " + usersList[currentID][1] + " has not been loaded, already at users list.");
 			    } else {
@@ -136,7 +136,7 @@ public class DataRead extends Main{
 		}
 		
 		if (repeat) {
-			Log.log("User " + username + " has been unloaded.");
+			Log.log("User " + username + " has disconnected.");
 		} else {
 			Log.log("Unable to unload user.");
 		}
