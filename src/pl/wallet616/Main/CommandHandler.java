@@ -2,7 +2,7 @@ package pl.wallet616.Main;
 
 public class CommandHandler extends Main{
 	public static String commandInput(String[] message) {
-		String repeat = "1";
+		String repeat = "1:";
 		boolean userFound = false;
 		int id = 0;
 		
@@ -21,19 +21,19 @@ public class CommandHandler extends Main{
 				// Tutaj dorobic odczyt wiadomosci o ile takie istnieja.
 			} else if (message[1].equals("say")) {
 				Log.log(message[2]);
-				repeat += ":1:1";
+				repeat += "1:1";
 			}
 		} else {
 			if (message[1].equals("load")) {
 				if(DataRead.loadUser(message[0], false)) {
-					repeat += ":1:1";
+					repeat += "3:1";
 				} else if (DataSave.addData(message[0], message[2])) {
-					repeat += ":1:1";
+					repeat += "3:1";
 				} else {
-					repeat += ":1:0";
+					repeat += "3:0";
 				}
 			} else {
-				repeat += ":0:0";
+				repeat += "0:0";
 			}
 		}
 		return repeat;
