@@ -15,7 +15,7 @@ public class ConnectionHandler extends Main {
 		// Creating handler of incoming connections.
 		private final static int port = 616;
 		private Socket socket;
-
+		
 		public void run() {
 			try {
 				ServerSocket serverSocket = new ServerSocket(port);
@@ -23,46 +23,40 @@ public class ConnectionHandler extends Main {
 				while (serverOpen) {
 					// Reading the message from the client
 					socket = serverSocket.accept();
-	                InputStream is = socket.getInputStream();
-	                InputStreamReader isr = new InputStreamReader(is);
-	                BufferedReader br = new BufferedReader(isr);
-	                String commandInput = br.readLine();
-	                
-	                // Formatting received message
-	                String returnMessage = "";
-	                String[] buffer = new String[3];
-	                Boolean vaildCommand = false;
-	                
-	                try 
-	    			{
-	                	if ((commandInput.length() - commandInput.replaceAll(":", "").length()) >= 2)
-	    				{
-	                		buffer = commandInput.split(":", 3);
-	                		vaildCommand = true;
-	    				}
-	    			}
-	    			catch (Exception e)
-	    		    {
-	    				Log.log("Invaild message format received.");
-	    			}
-	                
-	                
-	                if (vaildCommand) {
-	                	if (CommandHandler.commandInput(buffer)) {
-	                		returnMessage = "1:1:1";
-	                	} else {
-	                		returnMessage = "1:2:0";
-	                	}
-	                } else {
-	                	returnMessage = "1:0:0";
-	                }
-	                
-	                //Sending the response back to the client.
-	                OutputStream os = socket.getOutputStream();
-	                OutputStreamWriter osw = new OutputStreamWriter(os);
-	                BufferedWriter bw = new BufferedWriter(osw);
-	                bw.write(returnMessage + "\n");
-	                bw.flush();
+					InputStream is = socket.getInputStream();
+					InputStreamReader isr = new InputStreamReader(is);
+					BufferedReader br = new BufferedReader(isr);
+					String commandInput = br.readLine();
+					
+					// Formatting received message
+					String returnMessage = "";
+					String[] buffer = new String[3];
+					Boolean vaildCommand = false;
+					
+					try 
+					{
+						if ((commandInput.length() - commandInput.replaceAll(":", "").length()) >= 2) {
+							buffer = commandInput.split(":", 3);
+							vaildCommand = true;
+						}
+					}
+					catch (Exception e)
+					{
+						Log.log("Invaild message format received.");
+					}
+					
+					if (vaildCommand) {
+						returnMessage = CommandHandler.commandInput(buffer);
+					} else {
+						returnMessage = "1:0:0";
+					}
+					
+					//Sending the response back to the client.
+					OutputStream os = socket.getOutputStream();
+					OutputStreamWriter osw = new OutputStreamWriter(os);
+					BufferedWriter bw = new BufferedWriter(osw);
+					bw.write(returnMessage + "\n");
+					bw.flush();
 				}
 				
 				try {
