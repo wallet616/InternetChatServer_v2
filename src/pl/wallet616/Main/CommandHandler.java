@@ -18,7 +18,7 @@ public class CommandHandler extends Main{
 		if (userFound) {
 			if (message[1].equals("arch")) {
 				usersList[id][2] = String.valueOf(System.currentTimeMillis());
-				// Tutaj dorobic odczyt wiadomosci.
+				// Tutaj dorobic odczyt wiadomosci o ile takie istnieja.
 			} else if (message[1].equals("say")) {
 				Log.log(message[2]);
 				repeat += ":1:1";
