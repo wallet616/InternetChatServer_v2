@@ -9,10 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Log extends Main{
-	private static File folder;
-	private static File folder2;
-	private static File fileLog;
-	
 	// Creating log.
 	public static void log(String message) {
 		DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] ");
@@ -27,28 +23,14 @@ public class Log extends Main{
 		Date date = new Date();
 		
 		try {
-			if (System.getProperty("os.name").startsWith("Win")) {
-				folder = new File(System.getenv("APPDATA") + "/wallet616/server");
-				folder2 = new File(System.getenv("APPDATA") + "/wallet616/server/error");
-				fileLog = new File(System.getenv("APPDATA") + "/wallet616/server/error/" + fileDateFormat.format(date) + ".txt");
-			} else {
-				folder = new File("/home/wallet616/server");
-				folder2 = new File("/home/wallet616/server/error");
-				fileLog = new File("home/wallet616/server/error/" + fileDateFormat.format(date) + ".txt");
-			}
-			
-			if (!folder.exists()) {
-				folder.mkdirs();
-			}
-			if (!folder2.exists()) {
-				folder2.mkdirs();
-			}
-			if (!fileLog.exists()) {
-				fileLog.createNewFile();
+			// Creating file to save log.
+			File errorFile = new File(errorLogFile + fileDateFormat.format(date) + ".txt");
+			if (!errorFile.exists()) {
+				errorFile.createNewFile();
 			}
 			
 			// Dodanie nowych danych na koncu linii. 
-			BufferedWriter bw = new BufferedWriter(new FileWriter(fileLog, true));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(errorFile, true));
 			bw.append(dateFormat.format(date) + error + "\n");
 		    bw.close();
 		    

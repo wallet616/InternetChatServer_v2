@@ -9,7 +9,7 @@ public class Background extends Main{
 					long timeMili = System.currentTimeMillis();
 					for (int i = 0; i < slots; i++) {
 						if (usersList[i][2] != null && (timeMili - Long.valueOf(usersList[i][2]).longValue()) >= 20000) {
-							DataRead.unloadUser(usersList[i][0]);
+							DataRead.unloadUser(usersList[i][0], false);
 						}
 				    }
 					

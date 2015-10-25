@@ -1,41 +1,16 @@
 package pl.wallet616.Main;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class DataRead extends Main{
-	private static File folder;
-	private static File folder2;
-	private static File file;
-	private static final String OS = System.getProperty("os.name");
-	
+public class DataRead extends Main {
+	// Loading user by its key, or just checking if that user exist in data file.
 	public static boolean loadUser(String userKey, boolean check) {
 		boolean repeat = false;
 		try {
-			if (OS.startsWith("Win")) {
-				folder = new File(System.getenv("APPDATA") + "/wallet616");
-				folder2 = new File(System.getenv("APPDATA") + "/wallet616/server");
-				file = new File(System.getenv("APPDATA") + "/wallet616/server/data.dat");
-			} else {
-				folder = new File("/home/wallet616");
-				folder = new File("/home/wallet616/server");
-				file = new File("/home/wallet616/server/data.dat");
-			}
-			
-			if (!folder.exists()) {
-				folder.mkdirs();
-			}
-			if (!folder2.exists()) {
-				folder2.mkdirs();
-			}
-			if (!file.exists()) {
-				file.createNewFile();
-			}
-		    
 			// Data to assign in loops.
-			BufferedReader br = new BufferedReader(new FileReader(file));
+			BufferedReader br = new BufferedReader(new FileReader(dataFile));
 		    String line;
 		    int currentID = 0;
 		    boolean userKeyFound = false;
@@ -43,14 +18,14 @@ public class DataRead extends Main{
 		    
 		    if (!check) {
 			    loopbreak:
-			    for (int i = 0; i < slots; i++) {
+			    for (int i = 0; i <= slots; i++) {
 		    		if (usersList[i][0] == null) {
 		    			currentID = i;
 	    				break loopbreak;
 	    			}
 		    	}
 			    loopbreak:
-				for (int i = 0; i < slots; i++) {
+				for (int i = 0; i <= slots; i++) {
 			    	if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
 		    			isFreeToUse = false;
 		    			break loopbreak;
@@ -120,7 +95,7 @@ public class DataRead extends Main{
 		return message;
 	}
 	
-	public static boolean unloadUser(String userKey) {
+	public static boolean unloadUser(String userKey, boolean silent) {
 		boolean repeat = false;
 		String username = "";
 		loopbreak:
@@ -135,7 +110,7 @@ public class DataRead extends Main{
 	    	}
 		}
 		
-		if (repeat) {
+		if (repeat && !silent) {
 			Log.log("User " + username + " has disconnected.");
 		} else {
 			Log.log("Unable to unload user.");
