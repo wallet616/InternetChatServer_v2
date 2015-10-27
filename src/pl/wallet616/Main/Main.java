@@ -7,6 +7,8 @@ public class Main {
 	public static final int slots = 32;
 	public static final int archivemem = 32;
 	public static boolean serverOpen = true;
+	
+	// Files.
 	public static File mainFolder;
 	public static File mainServerFolder;
 	public static File mainErrorFolder;
@@ -15,12 +17,12 @@ public class Main {
 	public static String logFile;
 	public static String errorLogFile;
 	
-	// Connected users list.
+	// List of connected users. UserKey : UserName : UserTime
 	public static String[][] usersList = new String[slots][3];
-	public static String[][] archive = new String[archivemem][3];
+	// List of the newest messages. ID : Time : UserName : Message
+	public static String[][] archive = new String[archivemem][4];
 
 	public static void main(String[] args) {
-		archive[0][0] = "0";
 		
 		DataSave.getPaths();
 		Background.background.start();

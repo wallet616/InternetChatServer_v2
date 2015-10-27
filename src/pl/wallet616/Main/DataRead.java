@@ -17,15 +17,17 @@ public class DataRead extends Main {
 		    boolean isFreeToUse = true;
 		    
 		    if (!check) {
+		    	
 			    loopbreak:
-			    for (int i = 0; i <= slots; i++) {
+			    for (int i = 0; i < slots; i++) {
 		    		if (usersList[i][0] == null) {
 		    			currentID = i;
 	    				break loopbreak;
 	    			}
 		    	}
+		    
 			    loopbreak:
-				for (int i = 0; i <= slots; i++) {
+				for (int i = 0; i < slots; i++) {
 			    	if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
 		    			isFreeToUse = false;
 		    			break loopbreak;

@@ -13,7 +13,7 @@ public class Log extends Main{
 	public static void log(String message) {
 		DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] ");
 		Date date = new Date();
-		System.out.println(dateFormat.format(date) + "System info: " + message);
+		System.out.println(dateFormat.format(date) + "> System info: " + message);
 	}
 	
 	// Creating error log.
@@ -34,10 +34,10 @@ public class Log extends Main{
 			bw.append(dateFormat.format(date) + error + "\n");
 		    bw.close();
 		    
-		    System.out.println(dateFormat.format(date) + "System error: " + error);
+		    System.out.println(dateFormat.format(date) + "> System error: " + error);
 	    
 		} catch (IOException e) {
-			System.out.println(dateFormat.format(date) + "System error: Unable to save errorlog.");
+			System.out.println(dateFormat.format(date) + "> System error: Unable to save errorlog.");
 		}
 	}
 }

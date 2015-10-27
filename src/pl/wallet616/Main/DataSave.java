@@ -143,10 +143,10 @@ public class DataSave extends Main {
 			
 			// Dodanie nowych danych na koncu linii. 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
-			bw.append(dateFormat.format(date) + "[" + userName + "] " + message + "\n");
+			bw.append(dateFormat.format(date) + " " + userName + ": " + message + "\n");
 		    bw.close();
 		    
-		    System.out.println(dateFormat.format(date) + "[" + userName + "] " + message);
+		    System.out.println(dateFormat.format(date) + " " + userName + ": " + message);
 	    
 		} catch (IOException e) {
 			Log.error("System error: Unable to save errorlog.");

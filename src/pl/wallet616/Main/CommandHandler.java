@@ -1,5 +1,9 @@
 package pl.wallet616.Main;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class CommandHandler extends Main{
 	public static String commandInput(String[] message) {
 		String repeat = "1:";
@@ -18,9 +22,19 @@ public class CommandHandler extends Main{
 		if (userFound) {
 			if (message[1].equals("arch")) {
 				usersList[id][2] = String.valueOf(System.currentTimeMillis());
-				// Archive read here. "1:2"here"
-				if (Integer.valueOf(message[2]) < Integer.valueOf(archive[0][0])) {
-					
+				String returnString = "";
+				breakpoint:
+				for (int i = 0; i < archivemem; i++) {
+					if (archive[i][0] != null && Integer.parseInt(message[2]) < Integer.parseInt(archive[i][0])) {
+						returnString += "<?:?>" + archive[0] + "<#:#>" + archive[1] + "<#:#>" + archive[2] + "<#:#>" + archive[3];
+					} else {
+						break breakpoint;
+					}
+				}
+				if (returnString.equals("")) {
+					repeat += "2:0";
+				} else {
+					repeat += returnString.substring(5);
 				}
 				
 			} else if (message[1].equals("say")) {
@@ -37,37 +51,49 @@ public class CommandHandler extends Main{
 					repeat += "3:1";
 					
 				} else {
-					repeat += "3:0";
+					repeat += "0:0";
 					
 				}
 			} else {
-				repeat += "0:0";
-				
+				repeat += "3:0";
 			}
 		}
 		return repeat;
 	}
 	
 	public static boolean archiveAdd(String userName, String message) {
-		
-		// Dodac zapis daty juz w tym miejscu, zeby potem mozna bylo wyslac w wiadomosci zwrotnej.
+		// Adding time.
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy-HH-mm-ss");
+		Date date = new Date();
 		
 		// Move content of archive to farther position.
 		for (int i = 0; i < archivemem; i++) {
-			archive[i][0] = archive[i + 1][0];
-			archive[i][1] = archive[i + 1][1];
-			archive[i][2] = archive[i + 1][2];
+			if (archive[i][0] != null) {
+				archive[i][0] = archive[i + 1][0];
+				archive[i][1] = archive[i + 1][1];
+				archive[i][2] = archive[i + 1][2];
+				archive[i][3] = archive[i + 1][3];
+			} else {
+				break;
+			}
 		}
 		
 		// Generate id.
-		if (archive[1][0] != null) {
-			archive[0][0] = String.valueOf(Long.getLong(archive[1][0]) + 1);
+		if (archive[0][0] != null) {
+			long a = Long.parseLong(archive[0][0]);
+			long b = a + 1;
+			Log.log("" + b);
+			archive[0][0] = String.valueOf(b);
 		} else {
 			archive[0][0] = "0";
 		}
 		
+		Log.log(archive[0][0]);
+		
 		// Assign new message to archive.
-		archive[0][1] = message;
+		archive[0][1] = String.valueOf(dateFormat.format(date));
+		archive[0][2] = userName;
+		archive[0][3] = message;
 		DataSave.archiveSave(userName, message);
 		
 		return true;
