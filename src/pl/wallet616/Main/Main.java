@@ -17,9 +17,11 @@ public class Main {
 	
 	// Connected users list.
 	public static String[][] usersList = new String[slots][3];
-	public static String[][] archive = new String[archivemem][2];
+	public static String[][] archive = new String[archivemem][3];
 
 	public static void main(String[] args) {
+		archive[0][0] = "0";
+		
 		DataSave.getPaths();
 		Background.background.start();
 		ConnectionHandler.connection.start();

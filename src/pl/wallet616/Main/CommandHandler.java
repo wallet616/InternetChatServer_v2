@@ -19,6 +19,9 @@ public class CommandHandler extends Main{
 			if (message[1].equals("arch")) {
 				usersList[id][2] = String.valueOf(System.currentTimeMillis());
 				// Archive read here. "1:2"here"
+				if (Integer.valueOf(message[2]) < Integer.valueOf(archive[0][0])) {
+					
+				}
 				
 			} else if (message[1].equals("say")) {
 				archiveAdd(usersList[id][1], message[2]);
@@ -46,9 +49,14 @@ public class CommandHandler extends Main{
 	}
 	
 	public static boolean archiveAdd(String userName, String message) {
+		
+		// Dodac zapis daty juz w tym miejscu, zeby potem mozna bylo wyslac w wiadomosci zwrotnej.
+		
 		// Move content of archive to farther position.
 		for (int i = 0; i < archivemem; i++) {
+			archive[i][0] = archive[i + 1][0];
 			archive[i][1] = archive[i + 1][1];
+			archive[i][2] = archive[i + 1][2];
 		}
 		
 		// Generate id.
