@@ -23,18 +23,15 @@ public class CommandHandler extends Main{
 			if (message[1].equals("arch")) {
 				usersList[id][2] = String.valueOf(System.currentTimeMillis());
 				String returnString = "";
-				breakpoint:
-				for (int i = 0; i < archivemem; i++) {
+				for (int i = archivemem - 1; i >= 0; i--) {
 					if (archive[i][0] != null && Integer.parseInt(message[2]) < Integer.parseInt(archive[i][0])) {
-						returnString += "<?:?>" + archive[i][0] + "<#:#>" + archive[i][1] + "<#:#>" + archive[i][2] + "<#:#>" + archive[i][3];
-					} else {
-						break breakpoint;
+						returnString += ".ws1" + archive[i][0] + ".ws2" + archive[i][1] + ".ws2" + archive[i][2] + ".ws2" + archive[i][3];
 					}
 				}
 				if (returnString.equals("")) {
 					repeat += "2:0";
 				} else {
-					repeat += "2:" + returnString.substring(5);
+					repeat += "2:" + returnString.substring(4);
 				}
 				
 			} else if (message[1].equals("say")) {
@@ -67,14 +64,12 @@ public class CommandHandler extends Main{
 		Date date = new Date();
 		
 		// Move content of archive to farther position.
-		for (int i = 0; i < archivemem - 1; i++) {
+		for (int i = archivemem - 2; i >= 0; i--) {
 			if (archive[i][0] != null) {
 				archive[i + 1][0] = archive[i][0];
 				archive[i + 1][1] = archive[i][1];
 				archive[i + 1][2] = archive[i][2];
 				archive[i + 1][3] = archive[i][3];
-			} else {
-				break;
 			}
 		}
 		
