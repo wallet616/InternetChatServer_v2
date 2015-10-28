@@ -26,7 +26,7 @@ public class CommandHandler extends Main{
 				breakpoint:
 				for (int i = 0; i < archivemem; i++) {
 					if (archive[i][0] != null && Integer.parseInt(message[2]) < Integer.parseInt(archive[i][0])) {
-						returnString += "<?:?>" + archive[0] + "<#:#>" + archive[1] + "<#:#>" + archive[2] + "<#:#>" + archive[3];
+						returnString += "<?:?>" + archive[i][0] + "<#:#>" + archive[i][1] + "<#:#>" + archive[i][2] + "<#:#>" + archive[i][3];
 					} else {
 						break breakpoint;
 					}
@@ -34,7 +34,7 @@ public class CommandHandler extends Main{
 				if (returnString.equals("")) {
 					repeat += "2:0";
 				} else {
-					repeat += returnString.substring(5);
+					repeat += "2:" + returnString.substring(5);
 				}
 				
 			} else if (message[1].equals("say")) {
@@ -67,12 +67,12 @@ public class CommandHandler extends Main{
 		Date date = new Date();
 		
 		// Move content of archive to farther position.
-		for (int i = 0; i < archivemem; i++) {
+		for (int i = 0; i < archivemem - 1; i++) {
 			if (archive[i][0] != null) {
-				archive[i][0] = archive[i + 1][0];
-				archive[i][1] = archive[i + 1][1];
-				archive[i][2] = archive[i + 1][2];
-				archive[i][3] = archive[i + 1][3];
+				archive[i + 1][0] = archive[i][0];
+				archive[i + 1][1] = archive[i][1];
+				archive[i + 1][2] = archive[i][2];
+				archive[i + 1][3] = archive[i][3];
 			} else {
 				break;
 			}
@@ -80,15 +80,10 @@ public class CommandHandler extends Main{
 		
 		// Generate id.
 		if (archive[0][0] != null) {
-			long a = Long.parseLong(archive[0][0]);
-			long b = a + 1;
-			Log.log("" + b);
-			archive[0][0] = String.valueOf(b);
+			archive[0][0] = String.valueOf(Long.parseLong(archive[0][0]) + 1);
 		} else {
 			archive[0][0] = "0";
 		}
-		
-		Log.log(archive[0][0]);
 		
 		// Assign new message to archive.
 		archive[0][1] = String.valueOf(dateFormat.format(date));

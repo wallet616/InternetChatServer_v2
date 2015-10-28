@@ -5,7 +5,7 @@ import java.io.File;
 public class Main {
 	// Static data.
 	public static final int slots = 32;
-	public static final int archivemem = 32;
+	public static final int archivemem = 10;
 	public static boolean serverOpen = true;
 	
 	// Files.
