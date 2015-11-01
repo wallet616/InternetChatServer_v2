@@ -13,7 +13,7 @@ import java.net.Socket;
 public class ConnectionHandler extends Main {
 	public static Thread connection = new Thread() {
 		// Creating handler of incoming connections.
-		private final static int port = 616;
+		private final static int port = 27015;
 		private Socket socket;
 		
 		public void run() {

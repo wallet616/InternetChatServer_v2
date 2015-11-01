@@ -38,14 +38,16 @@ public class CommandHandler extends Main{
 				}
 				
 			} else if (message[1].equals("say")) {
-				if (checkIfNotNull(message[2])) {
-					archiveAdd(usersList[id][1], message[2]);
+				if (checkIfNotNull(message[2]) && archiveAdd(usersList[id][1], message[2])) {
 					repeat += "1:1";
 				} else {
 					repeat += "1:0";
 				}
 				
+			} else {
+				repeat += "0:0";
 			}
+			
 		} else {
 			if (message[1].equals("load")) {
 				if (checkIfNotNull(message[0])) {
@@ -56,8 +58,9 @@ public class CommandHandler extends Main{
 						repeat += "3:1";
 						
 					} else {
-						repeat += "0:0";
+						repeat += "1:0";
 					}
+					
 				} else {
 					repeat += "0:0";
 				}
@@ -65,6 +68,7 @@ public class CommandHandler extends Main{
 				repeat += "3:0";
 			}
 		}
+		
 		return repeat;
 	}
 	
