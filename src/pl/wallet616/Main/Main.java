@@ -23,10 +23,12 @@ public class Main {
 	public static String[][] archive = new String[archivemem][4];
 
 	public static void main(String[] args) {
-		
+		// Do not change sequence.
 		DataSave.getPaths();
 		Background.background.start();
 		ConnectionHandler.connection.start();
+		ConsoleInput.console();
+		
 	}
 
 }

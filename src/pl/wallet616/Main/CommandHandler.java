@@ -6,7 +6,6 @@ import java.util.Date;
 
 public class CommandHandler extends Main{
 	public static String commandInput(String[] message) {
-		String repeat = "1:";
 		boolean userFound = false;
 		int id = 0;
 		
@@ -23,53 +22,35 @@ public class CommandHandler extends Main{
 		if (userFound) {
 			if (message[1].equals("arch")) {
 				usersList[id][2] = String.valueOf(System.currentTimeMillis());
-				String returnString = "";
 				if (checkIfNumber(message[2])) {
-					for (int i = archivemem - 1; i >= 0; i--) {
-						if (archive[i][0] != null && Integer.parseInt(message[2]) < Integer.parseInt(archive[i][0])) {
-							returnString += ".ws1" + archive[i][0] + ".ws2" + archive[i][1] + ".ws2" + archive[i][2] + ".ws2" + archive[i][3];
-						}
-					}
+					return arch(message[2]);
 				}
-				if (returnString.equals("")) {
-					repeat += "2:0";
-				} else {
-					repeat += "2:" + returnString.substring(4);
-				}
-				
+			
 			} else if (message[1].equals("say")) {
 				if (checkIfNotNull(message[2]) && archiveAdd(usersList[id][1], message[2])) {
-					repeat += "1:1";
+					return "1:1:1";
 				} else {
-					repeat += "1:0";
+					return "1:1:0";
 				}
-				
-			} else {
-				repeat += "0:0";
 			}
-			
+		
 		} else {
 			if (message[1].equals("load")) {
 				if (checkIfNotNull(message[0])) {
 					if(DataRead.loadUser(message[0], false)) {
-						repeat += "3:1";
-						
+						return "1:3:1";
 					} else if (DataSave.addData(message[0], message[2])) {
-						repeat += "3:1";
-						
+						return "1:3:1";
 					} else {
-						repeat += "1:0";
+						return "1:1:0";
 					}
-					
-				} else {
-					repeat += "0:0";
 				}
 			} else {
-				repeat += "3:0";
+				return "1:3:0";
 			}
 		}
 		
-		return repeat;
+		return "1:0:0";
 	}
 	
 	public static boolean archiveAdd(String userName, String message) {
@@ -103,11 +84,29 @@ public class CommandHandler extends Main{
 		return true;
 	}
 	
+	// Archive reading.
+	public static String arch(String id) {
+		String repeat = "1:2:";
+		String returnString = "";
+		for (int i = archivemem - 1; i >= 0; i--) {
+			if (archive[i][0] != null && Integer.parseInt(id) < Integer.parseInt(archive[i][0])) {
+				returnString += ".ws1" + archive[i][0] + ".ws2" + archive[i][1] + ".ws2" + archive[i][2] + ".ws2" + archive[i][3];
+			}
+		}
+		
+		if (returnString.equals("")) {
+			repeat += "0";
+		} else {
+			repeat += returnString.substring(4);
+		}
+		return repeat;
+	}
+	
 	public static boolean checkIfNumber(String string) {
 		if (string.replace("[0-9]+", "").length() == 0 && !string.equals("")) {
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	public static boolean checkIfNotNull(String string) {
