@@ -9,6 +9,7 @@ public class CommandHandler extends Main{
 		boolean userFound = false;
 		int id = 0;
 		
+		// Checks if user is connected.
 		if (checkIfNotNull(message[0])) {
 			while (id < slots) {
 				if (usersList[id][0] != null && usersList[id][0].equals(message[0])) {
@@ -35,6 +36,7 @@ public class CommandHandler extends Main{
 			}
 		
 		} else {
+			// Tries to load him.
 			if (message[1].equals("load")) {
 				if (checkIfNotNull(message[0])) {
 					if(DataRead.loadUser(message[0], false)) {

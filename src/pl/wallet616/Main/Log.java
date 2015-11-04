@@ -13,6 +13,8 @@ public class Log extends Main{
 	public static void log(String message) {
 		DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] ");
 		Date date = new Date();
+		
+		// Display log in the console.
 		System.out.println(dateFormat.format(date) + "> System info: " + message);
 	}
 	
@@ -34,6 +36,7 @@ public class Log extends Main{
 			bw.append(dateFormat.format(date) + error + "\n");
 		    bw.close();
 		    
+		    // DIsplay log in the console.
 		    System.out.println(dateFormat.format(date) + "> System error: " + error);
 	    
 		} catch (IOException e) {

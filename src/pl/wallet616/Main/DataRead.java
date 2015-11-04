@@ -15,45 +15,42 @@ public class DataRead extends Main {
 		    int currentID = 0;
 		    boolean userKeyFound = false;
 		    boolean isFreeToUse = true;
+		    boolean freeSlotFound = false;
 		    
 		    if (!check) {
-		    	
-			    loopbreak:
 			    for (int i = 0; i < slots; i++) {
 		    		if (usersList[i][0] == null) {
 		    			currentID = i;
-	    				break loopbreak;
+		    			freeSlotFound = true;
+	    				break;
 	    			}
 		    	}
-		    
-			    loopbreak:
+			    
 				for (int i = 0; i < slots; i++) {
 			    	if (usersList[i][0] != null && usersList[i][0].equals(userKey)) {
 		    			isFreeToUse = false;
-		    			break loopbreak;
+		    			break;
 		    		}
 			    }
 		    }
 		    
 		    if (isFreeToUse) {
-		    	
-			    loopbreak:
 			    while ((line = br.readLine()) != null) {
 			    	line = clearText(line);
 			    	
 			    	if (line.startsWith("UserKey: ") && userKeyFound) {
-			    		break loopbreak;
+			    		break;
 			    	}
 			    	
 			    	if (line.equals("UserKey: " + userKey)) {
-			    		if (!check) {
+			    		if (!check && freeSlotFound) {
 			    			usersList[currentID][0] = line.substring(9);
 			    		}
 			    		repeat = true;
 			    		userKeyFound = true;
 			    	}
 			    	if (line.startsWith("UserName: ") && userKeyFound) {
-			    		if (!check) {
+			    		if (!check && freeSlotFound) {
 			    			usersList[currentID][1] = line.substring(10);
 			    		}
 			    	}

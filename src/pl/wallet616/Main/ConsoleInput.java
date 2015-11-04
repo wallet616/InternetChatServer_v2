@@ -25,6 +25,9 @@ public class ConsoleInput extends Main {
 					serverOpen = true;
 				} else if (consoleInput.startsWith("say ")) {
 					CommandHandler.archiveAdd("Server", consoleInput.substring(4));
+				} else if (consoleInput.startsWith("change ")) {
+					String[] buff = consoleInput.substring(7).split(" ");
+					DataSave.changeData(buff[0], buff[1], buff[2]);
 				} else {
 					Log.log("Command unreconised.");
 				}

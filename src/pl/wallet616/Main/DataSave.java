@@ -13,6 +13,7 @@ import java.util.Date;
 public class DataSave extends Main {
 	// Default paths to files.
 	public static void getPaths() {
+		// Check what os type it is.
 		String os = System.getProperty("os.name");
 		
 		if (os.startsWith("Win")) {
@@ -33,6 +34,7 @@ public class DataSave extends Main {
 			errorLogFile = "/home/wallet616/server/error/";
 		}
 		
+		// Create empty folders and data files.
 		try {
 			if (!mainFolder.exists()) {
 				mainFolder.mkdirs();
@@ -46,6 +48,7 @@ public class DataSave extends Main {
 			if (!dataFile.exists()) {
 				dataFile.createNewFile();
 			}
+			
 		} catch (IOException e) {
 			Log.error("Unable to create necesery files and folders");
 		}
@@ -56,6 +59,7 @@ public class DataSave extends Main {
 		try {
 			// Check if the userKey is already occurred, by trying to load again.
 			if (!DataRead.loadUser(userKey, true)) {
+				// Adding new data to data file.
 				BufferedWriter bw = new BufferedWriter(new FileWriter(dataFile, true));
 				bw.append("UserKey: " + DataRead.clearText(userKey) + "\n");
 				bw.append("	UserName: " + DataRead.clearText(userName) + "\n");
@@ -81,25 +85,29 @@ public class DataSave extends Main {
 			BufferedReader br = new BufferedReader(new FileReader(dataFile));
 		    String line;
 		    String newString = "";
+		    position = DataRead.clearText(position);
+		    data = DataRead.clearText(data);
 		    boolean foundKey = false;
 		    
 		    // Check if user wants to change userKey that is already occurred. 
-		    if (!(position.equals("userKey") && DataRead.loadUser(DataRead.clearText(data), true))) {
+		    if (!(position.equals("UserKey") && DataRead.loadUser(data, true))) {
 			    while ((line = br.readLine()) != null)
 			    {
 			    	// Finds right position to change data.
-			    	if (line.substring(9).startsWith(userKey)) {
+			    	if (DataRead.clearText(line).substring(9).equals(userKey)) {
+			    		
 			    		foundKey = true;
 			    	}
+			    	
+			    	// Changing data if right position is found.
 			    	if (foundKey) {
-			    		if (position.equals("userKey") && DataRead.clearText(line).startsWith("UserKey")) {
-			    			newString += "UserKey: " + DataRead.clearText(data) + "\n";
+			    		if (DataRead.clearText(line).startsWith(position)) {
+			    			if (!(DataRead.clearText(line).startsWith("UserKey"))) {
+			    				newString += "	";
+			    			}
+			    			newString += position + ": " + data + "\n";
 			    			repeat = true;
 			    			foundKey = false;
-			    		} else if (position.equals("userName") && DataRead.clearText(line).startsWith("UserName")) {
-			    			newString += "	UserName: " + DataRead.clearText(data) + "\n";
-				    		repeat = true;
-				    		foundKey = false;
 			    		} else {
 				    		newString += line + "\n";
 				    	}
@@ -130,6 +138,7 @@ public class DataSave extends Main {
 	}
 	
 	public static boolean archiveSave(String userName, String message) {
+		// Creating default data time.
 		DateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss]");
 		Date date = new Date();
@@ -141,11 +150,12 @@ public class DataSave extends Main {
 				log.createNewFile();
 			}
 			
-			// Dodanie nowych danych na koncu linii. 
+			// Adding new data at the end of the line. 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(log, true));
 			bw.append(dateFormat.format(date) + " " + userName + ": " + message + "\n");
 		    bw.close();
 		    
+		    // Display messages in console.
 		    System.out.println(dateFormat.format(date) + " " + userName + ": " + message);
 	    
 		} catch (IOException e) {
