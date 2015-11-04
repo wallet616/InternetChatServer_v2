@@ -130,7 +130,7 @@ public class DataSave extends Main {
 	}
 	
 	public static boolean archiveSave(String userName, String message) {
-		DateFormat fileDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat fileDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss]");
 		Date date = new Date();
 		

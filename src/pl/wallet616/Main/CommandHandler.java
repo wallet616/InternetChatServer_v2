@@ -55,7 +55,7 @@ public class CommandHandler extends Main{
 	
 	public static boolean archiveAdd(String userName, String message) {
 		// Adding time.
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");
 		Date date = new Date();
 		
 		// Move content of archive to farther position.

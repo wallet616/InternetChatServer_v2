@@ -29,7 +29,7 @@ public class Log extends Main{
 				errorFile.createNewFile();
 			}
 			
-			// Dodanie nowych danych na koncu linii. 
+			// Adding new data at the end of the line. 
 			BufferedWriter bw = new BufferedWriter(new FileWriter(errorFile, true));
 			bw.append(dateFormat.format(date) + error + "\n");
 		    bw.close();
