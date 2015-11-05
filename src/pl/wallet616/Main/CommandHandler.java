@@ -33,6 +33,24 @@ public class CommandHandler extends Main{
 				} else {
 					return "1:1:0";
 				}
+			
+			} else if (message[1].equals("change")) {
+				try 
+				{
+					if ((message[2].length() - message[2].replaceAll(":", "").length()) == 1) {
+						String[] buffer = message[2].split(":");
+						
+						if (checkIfNotNull(buffer[0]) && checkIfNotNull(buffer[1]) && DataSave.changeData(message[0], buffer[0], buffer[1])) {
+							return "1:1:1";
+						} else {
+							return "1:1:0";
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					Log.log("Change data received.");
+				}
 			}
 		
 		} else {
