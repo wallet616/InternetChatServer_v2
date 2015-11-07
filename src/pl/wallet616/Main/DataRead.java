@@ -109,10 +109,12 @@ public class DataRead extends Main {
 	    	}
 		}
 		
-		if (repeat && !silent) {
-			Log.log("User " + username + " has disconnected.");
-		} else {
-			Log.log("Unable to unload user.");
+		if (!silent) {
+			if (repeat) {
+				Log.log("User " + username + " has disconnected.");
+			} else {
+				Log.log("Unable to unload user.");
+			}
 		}
 		return repeat;
 	}
