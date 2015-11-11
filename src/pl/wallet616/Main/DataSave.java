@@ -95,7 +95,6 @@ public class DataSave extends Main {
 			    {
 			    	// Finds right position to change data.
 			    	if (DataRead.clearText(line).substring(9).equals(userKey)) {
-			    		
 			    		foundKey = true;
 			    	}
 			    	
